@@ -3,12 +3,12 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
+  const env = loadEnv(mode, (process as any).cwd(), '');
   return {
     plugins: [react()],
     define: {
-      // Ini memungkinkan process.env.API_KEY terbaca di aplikasi client-side
-      // Fallback ke string kosong jika env tidak ditemukan untuk mencegah error replace
+      // Mengganti process.env.API_KEY dengan nilai string dari environment variables
+      // Penting: Gunakan JSON.stringify agar nilai dimasukkan sebagai string literal, bukan identifier
       'process.env.API_KEY': JSON.stringify(env.API_KEY || '')
     }
   };

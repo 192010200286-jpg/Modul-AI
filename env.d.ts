@@ -1,9 +1,9 @@
-// Fix for "Cannot find type definition file for 'vite/client'"
-// Manually declare process.env as it is polyfilled by Vite for API_KEY usage.
+// Fix: Removed problematic triple-slash reference to 'vite/client' which was causing a "Cannot find type definition file" error.
+// The manual declaration of NodeJS.ProcessEnv below is sufficient to type the injected environment variables.
 
-declare const process: {
-  env: {
+declare namespace NodeJS {
+  interface ProcessEnv {
     API_KEY: string;
     [key: string]: string | undefined;
-  };
-};
+  }
+}
